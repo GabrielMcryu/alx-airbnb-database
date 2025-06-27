@@ -1,11 +1,5 @@
-# Task 2
-
-## This SQL script is for a Mysql Database
-
--- Create the database if it doesn't exist
+-- Create the database if it doesn't already exist
 CREATE DATABASE IF NOT EXISTS airbnb_clone_database;
-
--- Use the database
 USE airbnb_clone_database;
 
 -- --------------------------------------------------
@@ -21,6 +15,9 @@ CREATE TABLE User (
   role ENUM('guest', 'host', 'admin') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Index on email (for login/search optimization)
+CREATE INDEX idx_user_email ON User(email);
 
 -- --------------------------------------------------
 -- PROPERTIES TABLE
@@ -53,6 +50,9 @@ CREATE TABLE Booking (
   FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
 
+-- Index on property_id (foreign key)
+CREATE INDEX idx_booking_property_id ON Booking(property_id);
+
 -- --------------------------------------------------
 -- PAYMENTS TABLE
 -- --------------------------------------------------
@@ -64,6 +64,9 @@ CREATE TABLE Payment (
   payment_method ENUM('credit_card', 'paypal', 'stripe') NOT NULL,
   FOREIGN KEY (booking_id) REFERENCES Booking(booking_id) ON DELETE CASCADE
 );
+
+-- Index on booking_id (foreign key)
+CREATE INDEX idx_payment_booking_id ON Payment(booking_id);
 
 -- --------------------------------------------------
 -- REVIEWS TABLE

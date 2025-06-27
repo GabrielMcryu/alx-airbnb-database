@@ -1,3 +1,3 @@
-# Task 1 and 2
+# Task 0
 
 ![ERD](./airbnb-clone-diagram.drawio.png)
